@@ -8,18 +8,29 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    var searchText : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        searchBar.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    func searchBarSearchButtonClicked( searchBar: UISearchBar)
+    {
+        println("clicked")
+        searchText = searchBar.text
+        self.performSegueWithIdentifier("resultstable",sender:self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var DestViewController = segue.destinationViewController as! CollectionViewController
+        DestViewController.LabelText = searchText
+    }
 }
 
